@@ -3,14 +3,12 @@
 {% block title %}Posts{% endblock title %} 
 
 {% block content %} 
-{% for post in post_list %} 
-    <div class="card">
+{% for post in post_list %}
+    <div class="card" style="border-color:lightslategray;">
         <div class="card-header">
-            <a href="{% url 'post_detail' post.pk %}" style="color:black; text-decoration:none;">{{ post.title }}</a> &middot; 
-            <span class="text-muted">by {{post.author}} |
-                {{post.date}}</span>
+            <a href="{% url 'post_detail' post.pk %}" style="color:black; text-decoration:none;">{{ post.title }}</a> 
         </div>
-        <div>
+        <div style="background-color: lightslategray;">
             {% if post.pet_image %} 
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <style>
@@ -22,14 +20,15 @@
                     max-width: 60%; 
                     height: auto;
                     max-height: 90%;
+                    
                 }
             </style>
             <img src="{{ post.pet_image.url }}" >
             {% endif %} 
         </div>
-        <div class="card-footer text-center text-muted">
-            <a href="{% url 'post_edit' post.pk %}">Edit</a> | 
-            <a href="{% url 'post_delete' post.pk %}">Delete</a>
+        <div class="card-footer">
+            <span class="text-muted">by {{post.author}} |
+                {{post.date}}</span>
         </div>
     </div>
     <br />

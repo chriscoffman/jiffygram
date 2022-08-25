@@ -5,14 +5,25 @@
     <h2>{{ object.title }}</h2>
     <p>by {{object.author}} | {{object.date}}</p>
 </div>
-
+{% if request.user == object.author %}
 <p><a href="{% url 'post_edit' post.pk %}">Edit</a> |
     <a href="{% url 'post_delete' post.pk %}">Delete</a></p>
+{% endif %}
 <p>Back to <a href="{% url 'post_list' %}">All Posts</a>.</p>
 {% if post.pet_image %} 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        img {
+            display: block; 
+            margin-left: auto;
+            margin-right: auto;
+            width: auto; 
+            max-width: 60%; 
+            height: auto;
+            max-height: 90%;
+            }
+    </style>
 <img src="{{ post.pet_image.url }}"
-max-width= 100%;
-height= auto;>
 {% endif %} 
 
 {% endblock content %} 

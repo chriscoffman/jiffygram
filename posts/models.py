@@ -9,6 +9,10 @@ class Post(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE)
     pet_image = models.ImageField(null = True, blank=True, upload_to="images/") 
+    pet_name = models.CharField(max_length= 250, null=True, blank=True)
+
+    class Meta:
+        ordering = ['-date'] 
 
     def __str__(self):
         return self.title 
