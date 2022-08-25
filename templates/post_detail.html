@@ -1,0 +1,18 @@
+{% extends 'base.html' %} 
+
+{% block content %} 
+<div class="post-entry">
+    <h2>{{ object.title }}</h2>
+    <p>by {{object.author}} | {{object.date}}</p>
+</div>
+
+<p><a href="{% url 'post_edit' post.pk %}">Edit</a> |
+    <a href="{% url 'post_delete' post.pk %}">Delete</a></p>
+<p>Back to <a href="{% url 'post_list' %}">All Posts</a>.</p>
+{% if post.pet_image %} 
+<img src="{{ post.pet_image.url }}"
+max-width= 100%;
+height= auto;>
+{% endif %} 
+
+{% endblock content %} 
