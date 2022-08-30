@@ -29,6 +29,9 @@
         <div class="card-footer">
             <span class="text-muted">by {{post.author}} |
                 {{post.date}}</span>
+            {% if post.pet_name %} 
+            <span class="text-muted">This is a post about {{post.pet_name}}!</span>
+            {% endif %} 
         </div>
     </div>
     <br />
