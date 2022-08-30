@@ -1,8 +1,8 @@
 {% extends 'base.html' %} 
 {% load crispy_forms_tags %} 
-{% load static %} 
 
 {% block content %} 
+{% load static %} 
 <div class="post-entry">
     <h2>{{ object.title }}</h2>
     <p>by {{object.author}} | {{object.date}}</p>
