@@ -6,6 +6,14 @@
     <h2>{{ object.title }}</h2>
     <p>by {{object.author}} | {{object.date}}</p>
 </div>
+<hr>
+<form action="{% url 'like_post' post.pk %}"
+method="post">
+    {% csrf_token %}
+    <button type="submit", name='post_id', value="{{ post.id }}", 
+    class="btn btn-primary btn-sm">Like</button> - {{ total_likes }} Likes
+</form>
+<hr>
 {% if request.user == object.author %}
 <p><a href="{% url 'post_edit' post.pk %}">Edit</a> |
     <a href="{% url 'post_delete' post.pk %}">Delete</a></p>

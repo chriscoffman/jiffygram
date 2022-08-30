@@ -1,8 +1,10 @@
 from django.views.generic.edit import UpdateView, DeleteView, CreateView 
+from django.shortcuts import get_object_or_404
 from django.views import View 
 from django.views.generic import ListView, DetailView, FormView 
 from django.views.generic.detail import SingleObjectMixin
 from django.urls import reverse_lazy, reverse 
+from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import (
     LoginRequiredMixin,
     UserPassesTestMixin
@@ -11,6 +13,15 @@ from django.contrib.auth.mixins import (
 from .models import Post 
 from .forms import CommentForm 
 
+def LikeView(request, pk):
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    post.likes.add(request.user) 
+    return HttpResponseRedirect(reverse('post_detail', args=[str(pk)]))
+
+    
+
+
+
 class CommentGet(DetailView):
     model = Post 
     template_name = 'post_detail.html' 
@@ -18,6 +29,9 @@ class CommentGet(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = CommentForm 
+        info = get_object_or_404(Post, id=self.kwargs['pk'])
+        total_likes = info.total_likes()
+        context['total_likes'] = total_likes  
         return context 
 
 class CommentPost(SingleObjectMixin, FormView):
@@ -47,7 +61,7 @@ class PostListView(LoginRequiredMixin, ListView):
 
 class PostDetailView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        view = CommentGet.as_view() 
+        view = CommentGet.as_view()
         return view(request, *args, **kwargs) 
     
     def post(self, request, *args, **kwargs):

@@ -1,7 +1,7 @@
 from django.conf import settings 
 from django.db import models 
 from django.urls import reverse 
-from jiffygram.accounts.models import CustomUser 
+from accounts.models import CustomUser 
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
@@ -11,7 +11,11 @@ class Post(models.Model):
         on_delete=models.CASCADE)
     pet_image = models.ImageField(null = True, blank=True, upload_to="images/") 
     pet_name = models.CharField(max_length= 250, null=True, blank=True)
-    likes = models.ManyToManyField(CustomUser, related_name='jiffygram_posts' )
+    likes = models.ManyToManyField(CustomUser, related_name='jiffygram_post')
+
+    def total_likes(self):
+        return self.likes.count() 
+    
 
     class Meta:
         ordering = ['-date'] 
